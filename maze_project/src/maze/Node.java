@@ -11,6 +11,8 @@ class Node{
     private boolean rightWall;
     private boolean leftWall;
 
+    private boolean path;
+
     public Node() {
         this.downNext = null;
         this.leftNext = null;
@@ -20,6 +22,7 @@ class Node{
         this.downWall = true;
         this.rightWall = true;
         this.leftWall = true;
+        this.path = false;
     }
 
     public Node getUpNext() {
@@ -84,6 +87,14 @@ class Node{
 
     public void setLeftWall(boolean leftWall) {
         this.leftWall = leftWall;
+    }
+
+    public boolean isPath() {
+        return path;
+    }
+
+    public void setPath(boolean path) {
+        this.path = path;
     }
 
     @Override
