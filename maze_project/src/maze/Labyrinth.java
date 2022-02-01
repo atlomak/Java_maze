@@ -9,14 +9,15 @@ public class Labyrinth {
     private int height = 0;
     private int width = 0;
     private Difficulty difficulty;
-    private Node baseNode = null;
+    protected Node baseNode = null;
     private Node outNote = null;
-    private Node[][] nodesToString;
+    protected Node[][] nodesToString;
     public enum Difficulty {
         HARD,
         MEDIUM,
         EASY
     }
+    //Do wywalenia
     public enum Algorithm {
         RANDOMIZED_DEPTH__FIRST,
         OTHER_ALG;
@@ -194,6 +195,9 @@ public class Labyrinth {
 
     public Node getBaseNode() {
         return baseNode;
+    }
+    public void setBaseNode(Node baseNode){
+        this.baseNode = baseNode;
     }
     public Node getOutNote() {
         return outNote;
