@@ -5,7 +5,7 @@ import java.util.*;
 public class Generator {
     private Labyrinth labyrinth;
     private final Random random = new Random();
-    private enum Directions{
+    protected enum Directions{
         UP,
         DOWN,
         LEFT,
@@ -13,7 +13,7 @@ public class Generator {
     }
 
     private Deque<Node> stack = new ArrayDeque<>();
-    private Deque<Node> beenThere = new ArrayDeque<>();
+    private Set<Node> beenThere = new HashSet<>();
     List<Directions> directions = new ArrayList<>();
     List<Directions> dir = Arrays.asList(Directions.values());
     public Generator(Labyrinth labyrinth){
@@ -26,6 +26,10 @@ public class Generator {
         return labyrinth;
     }
 
+    public Deque<Node> getStack() {
+        return stack;
+    }
+
     public void RDF(Node node){
         directions.removeAll(directions);
         directions.addAll(dir);
@@ -33,6 +37,7 @@ public class Generator {
         while (true){
             if(directions.size()==0) {
                 if (!stack.isEmpty()) {
+                    //if(stack.getFirst().isPath()) stack.getFirst().setPath(false); //test
                     RDF(stack.pop());
                     break;
                 } else {
@@ -47,7 +52,9 @@ public class Generator {
                         node.setUpWall(false);
                         nextNode.setDownWall(false);
                         stack.addFirst(nextNode);
-                        beenThere.addFirst(nextNode);
+                        beenThere.add(nextNode);
+                        //if(!nextNode.isPath()) nextNode.setPath(true);    //modyfikacja parametru - test
+                        //nextNode.setPath(true);//modyfikacja parametru - test
                         RDF(nextNode);
                         break;
                     }
@@ -61,7 +68,9 @@ public class Generator {
                         node.setDownWall(false);
                         nextNode.setUpWall(false);
                         stack.addFirst(nextNode);
-                        beenThere.addFirst(nextNode);
+                        beenThere.add(nextNode);
+                        //if(!nextNode.isPath()) nextNode.setPath(true);    //modyfikacja parametru - test
+                        //nextNode.setPath(true);//modyfikacja parametru - test
                         RDF(nextNode);
                         break;
                     }
@@ -75,7 +84,9 @@ public class Generator {
                         node.setLeftWall(false);
                         nextNode.setRightWall(false);
                         stack.addFirst(nextNode);
-                        beenThere.addFirst(nextNode);
+                        beenThere.add(nextNode);
+                        //if(!nextNode.isPath()) nextNode.setPath(true);    //modyfikacja parametru - test
+                        //nextNode.setPath(true);//modyfikacja parametru - test
                         RDF(nextNode);
                         break;
                     }
@@ -90,7 +101,9 @@ public class Generator {
                         node.setRightWall(false);
                         nextNode.setLeftWall(false);
                         stack.addFirst(nextNode);
-                        beenThere.addFirst(nextNode);
+                        beenThere.add(nextNode);
+                        //if(!nextNode.isPath()) nextNode.setPath(true);    //modyfikacja parametru - test
+                        //nextNode.setPath(true);//modyfikacja parametru - test
                         RDF(nextNode);
                         break;
                     }

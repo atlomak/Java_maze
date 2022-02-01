@@ -11,7 +11,7 @@ public class Labyrinth {
     private int width = 0;
     private Difficulty difficulty;
     protected Node baseNode = null;
-    private Node outNote = null;
+    protected Node outNote = null;
     protected Node[][] nodesToString;
     public enum Difficulty {
         HARD,
@@ -24,7 +24,7 @@ public class Labyrinth {
      * @param height
      */
     public Labyrinth(int width, int height){
-        if(width<10 || height<10){
+        if(width<5 || height<5){
             throw new WrongSizeException("Too small size of the Labyrint",width,height);
         }
         this.height = height;
@@ -65,7 +65,7 @@ public class Labyrinth {
         generateGrid();
     }
     private Node[][]  generateGrid(){
-        if(height<10 || width<10){
+        if(height<5 || width<5){
             throw new WrongSizeException("Too small size of the Labyrint",width,height);
         }
         baseNode = new Node();
@@ -147,25 +147,37 @@ public class Labyrinth {
                 if(nodesToString[w][h].isRightWall() && nodesToString[w][h].isLeftWall()){
                     if(nodesToString[w][h]==baseNode || nodesToString[w][h]==outNote){
                         System.out.print("| X |");
-                    }else System.out.print("|   |");
+                    }else {
+                        if(nodesToString[w][h].isPath()) System.out.print("| o |");
+                        else System.out.print("|   |");
+                    }
 
                 }
                 else if(nodesToString[w][h].isRightWall()){
                     if(nodesToString[w][h]==baseNode || nodesToString[w][h]==outNote){
                         System.out.print("  X |");
-                    }else System.out.print("    |");
+                    }else {
+                        if(nodesToString[w][h].isPath()) System.out.print("  o |");
+                        else System.out.print("    |");
+                    }
 
                 }
                 else if(nodesToString[w][h].isLeftWall()){
                     if(nodesToString[w][h]==baseNode || nodesToString[w][h]==outNote){
                         System.out.print("| X  ");
-                    }else System.out.print("|    ");
+                    }else {
+                        if(nodesToString[w][h].isPath()) System.out.print("| o  ");
+                        else System.out.print("|    ");
+                    }
 
                 }
                 else {
                     if(nodesToString[w][h]==baseNode || nodesToString[w][h]==outNote){
                         System.out.print("  X  ");
-                    }else System.out.print("     ");
+                    }else {
+                        if(nodesToString[w][h].isPath()) System.out.print("  o  ");
+                        else System.out.print("     ");
+                    }
                 }
             }
             System.out.print("\n");
@@ -223,10 +235,14 @@ public class Labyrinth {
 
     public static void main(String[] args) {
         Labyrinth L1 = new Labyrinth(10, 10);
-        Labyrinth L2 = new Labyrinth(60,10);
+        Labyrinth L2 = new Labyrinth(5,5);
         Generator generator = new Generator(L2);
         L2 = generator.getLabyrinth();
         System.out.println(L2);
-        System.out.print(L2.baseNode.equals(L2.outNote));
+        System.out.println(L2.baseNode.equals(L2.outNote));
+        Solver solver = new Solver(L2);
+        solver.solve();
+        L2 = solver.getLab();
+        System.out.println(solver);
     }
 }
